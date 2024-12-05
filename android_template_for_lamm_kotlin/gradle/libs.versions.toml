@@ -1,0 +1,63 @@
+[versions]
+
+## Versions SDK
+compileSdk = "35"
+minSdk = "24"
+targetSdk = "35"
+
+## Versions libraries
+androidx-core-core = "1.15.0"
+androidx-compose = "1.7.5"
+androidx-compose-compose-bom = "2024.11.00"
+androidx-activity-activity-compose = "1.9.3"
+androidx-constraintlayout-constraintlayout-compose = "1.1.0"
+androidx-lifecycle-lifecycle-viewmodel = "2.8.7"
+androidx-navigation = "2.8.4"
+org-jetbrains-kotlinx-kotlinx-coroutines = "1.9.0"
+junit-junit = "4.13.2"
+io-ktor-ktor-client = "3.0.2"
+
+## Versions plugins
+gradle = "8.7.3"
+kotlin = "2.0.21"
+
+[libraries]
+
+## Implementation
+androidx-core-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-core" }
+androidx-compose-animation-animation-core = { module = "androidx.compose.animation:animation-core", version.ref = "androidx-compose" }
+androidx-compose-animation-animation = { module = "androidx.compose.animation:animation", version.ref = "androidx-compose" }
+androidx-compose-ui-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose" }
+androidx-compose-ui-ui-geometry = { module = "androidx.compose.ui:ui-geometry", version.ref = "androidx-compose" }
+androidx-compose-ui-ui-graphics = { module = "androidx.compose.ui:ui-graphics", version.ref = "androidx-compose" }
+androidx-compose-ui-ui-text = { module = "androidx.compose.ui:ui-text", version.ref = "androidx-compose" }
+androidx-compose-ui-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "androidx-compose" }
+androidx-compose-ui-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-compose" }
+androidx-compose-foundation-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "androidx-compose" }
+androidx-compose-foundation-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "androidx-compose" }
+androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3" }
+androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-activity-compose" }
+androidx-constraintlayout-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "androidx-constraintlayout-constraintlayout-compose" }
+androidx-lifecycle-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-lifecycle-viewmodel" }
+androidx-lifecycle-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle-lifecycle-viewmodel" }
+androidx-navigation-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation"}
+org-jetbrains-kotlinx-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx-kotlinx-coroutines" }
+io-ktor-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "io-ktor-ktor-client" }
+io-ktor-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "io-ktor-ktor-client" }
+
+## Implementation Platform
+androidx-compose-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-compose-bom" }
+
+## DebugImplementation
+androidx-compose-ui-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "androidx-compose" }
+androidx-compose-ui-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
+## TestImplementation
+junit-junit = { module = "junit:junit", version.ref = "junit-junit" }
+
+[plugins]
+
+com-android-application = { id = "com.android.application", version.ref = "gradle" }
+com-android-library = { id = "com.android.library", version.ref = "gradle" }
+org-jetbrains-kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
