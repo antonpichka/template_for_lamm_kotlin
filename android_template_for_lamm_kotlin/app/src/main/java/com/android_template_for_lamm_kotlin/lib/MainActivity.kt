@@ -1,4 +1,4 @@
-package com.android_template_for_lamm_kotlin
+package com.android_template_for_lamm_kotlin.lib
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,14 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.android_template_for_lamm_kotlin.ui.theme.AndroidDemoJetpackComposeHelloWorldTheme
+import com.android_template_for_lamm_kotlin.lib.named_vm.app_vm.AppVM
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AndroidDemoJetpackComposeHelloWorldTheme {
-                // A surface container using the 'background' color from the theme
+            AppVM {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -40,7 +39,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    AndroidDemoJetpackComposeHelloWorldTheme {
+    AppVM {
         Greeting("Android")
     }
 }
