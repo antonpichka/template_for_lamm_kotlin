@@ -49,8 +49,35 @@ android {
 }
 
 dependencies {
+    // Implementation
     implementation(libs.androidx.core.core.ktx)
     implementation(libs.androidx.compose.animation.animation.core)
+    implementation(libs.androidx.compose.animation.animation)
+    implementation(libs.androidx.compose.ui.ui)
+    implementation(libs.androidx.compose.ui.ui.geometry )
+    implementation(libs.androidx.compose.ui.ui.graphics)
+    implementation(libs.androidx.compose.ui.ui.text)
+    implementation(libs.androidx.compose.ui.ui.util )
+    implementation(libs.androidx.compose.ui.ui.tooling.preview)
+    implementation(libs.androidx.compose.foundation.foundation)
+    implementation(libs.androidx.compose.foundation.foundation.layout)
+    implementation(libs.androidx.compose.material3.material3)
+    implementation(libs.androidx.activity.activity.compose)
+    implementation(libs.androidx.constraintlayout.constraintlayout.compose)
+    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation.navigation.compose)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.android)
+    implementation(libs.io.ktor.ktor.client.core)
+    implementation(libs.io.ktor.ktor.client.cio)
 
+    // Implementation Platform
     implementation(platform(libs.androidx.compose.compose.bom))
+
+    // DebugImplementation
+    debugImplementation(libs.androidx.compose.ui.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.ui.test.manifest)
+
+    // TestImplementation
+    testImplementation(libs.junit.junit)
 }
