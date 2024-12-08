@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-open class AndroidThemeUtility private constructor() {
+class AndroidThemeUtility private constructor() {
     companion object {
         val lightColorScheme = lightColorScheme(
             // Purple40

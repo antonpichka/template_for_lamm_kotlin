@@ -4,7 +4,7 @@ class LocalException(
     thisClass: Any,
     val enumGuilty: EnumGuilty,
     key: String,
-    override val message: String = "") : BaseException(thisClass, "LocalException", key)
+    val exceptionMessage: String = "") : BaseException(thisClass, "LocalException", key)
 {
     init {
         debugPrintExceptionParametersThisClassAndExceptionClass()
@@ -13,6 +13,6 @@ class LocalException(
     override fun toString(): String {
         return "LocalException(enumGuilty: ${this.enumGuilty.name}, " +
                 "key: ${this.key}, " +
-                "message (optional): ${this.message})"
+                "exceptionMessage (optional): ${this.exceptionMessage})"
     }
 }
