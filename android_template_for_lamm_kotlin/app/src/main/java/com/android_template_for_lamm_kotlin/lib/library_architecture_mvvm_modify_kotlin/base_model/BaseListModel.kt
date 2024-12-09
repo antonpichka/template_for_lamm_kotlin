@@ -35,11 +35,11 @@ abstract class BaseListModel<T : BaseModel>(val listModel: MutableList<T>) {
         this.listModel.removeAt(indexOfFirst)
     }
 
-    fun insertListFromNewListModelParameterListModel(newListModel: Array<T>) {
+    fun insertListFromNewListModelParameterListModel(newListModel: List<T>) {
         this.listModel.addAll(newListModel)
     }
 
-    fun updateListFromNewListModelParameterListModel(newListModel: Array<T>) {
+    fun updateListFromNewListModelParameterListModel(newListModel: List<T>) {
         for(newItemModel in newListModel) {
             val indexOfFirst = this.listModel.indexOfFirst { it.uniqueId == newItemModel.uniqueId }
             if(indexOfFirst == -1) {
@@ -49,7 +49,7 @@ abstract class BaseListModel<T : BaseModel>(val listModel: MutableList<T>) {
         }
     }
 
-    fun deleteListFromNewListModelParameterListModel(newListModel: Array<T>) {
+    fun deleteListFromNewListModelParameterListModel(newListModel: List<T>) {
         for(newItemModel in newListModel) {
             val indexOfFirst = this.listModel.indexOfFirst { it.uniqueId == newItemModel.uniqueId }
             if(indexOfFirst == -1) {
