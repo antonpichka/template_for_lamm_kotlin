@@ -2,7 +2,7 @@ package com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modif
 
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.CurrentModelWIndex
 
-abstract class BaseModelTTNamedTTNamedTTNamedTTIterator<T : BaseModel> {
+abstract class BaseModelTTNamedTTNamedTTNamedTTIterator<T : BaseModel> protected constructor() {
     protected val listModelIterator: MutableList<T> = mutableListOf()
 
     protected abstract fun currentModelWIndex(): CurrentModelWIndex<T>

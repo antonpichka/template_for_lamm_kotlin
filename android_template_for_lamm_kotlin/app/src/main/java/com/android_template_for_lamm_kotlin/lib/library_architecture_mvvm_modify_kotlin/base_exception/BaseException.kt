@@ -2,7 +2,7 @@ package com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modif
 
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.debugPrintException
 
-abstract class BaseException(
+abstract class BaseException protected constructor(
     private val thisClass: Any,
     private val exceptionClass: String,
     val key: String) : Exception()

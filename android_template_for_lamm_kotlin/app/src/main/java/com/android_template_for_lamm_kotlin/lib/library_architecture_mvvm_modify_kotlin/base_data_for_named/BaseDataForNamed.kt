@@ -2,7 +2,7 @@ package com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modif
 
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.ExceptionController
 
-abstract class BaseDataForNamed<T : Enum<T>>(
+abstract class BaseDataForNamed<T : Enum<T>> protected constructor(
     val isLoading: Boolean)
 {
     val exceptionController: ExceptionController = ExceptionController.success()

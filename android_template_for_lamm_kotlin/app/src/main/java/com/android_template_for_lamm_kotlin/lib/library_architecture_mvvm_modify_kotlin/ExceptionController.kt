@@ -10,7 +10,7 @@ class ExceptionController private constructor(
             return ExceptionController(null)
         }
 
-        fun exception(exception: BaseException?): ExceptionController {
+        fun exception(exception: BaseException): ExceptionController {
             return ExceptionController(exception)
         }
     }

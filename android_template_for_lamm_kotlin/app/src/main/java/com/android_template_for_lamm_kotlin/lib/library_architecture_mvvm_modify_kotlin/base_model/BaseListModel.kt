@@ -1,6 +1,6 @@
 package com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.base_model
 
-abstract class BaseListModel<T : BaseModel>(val listModel: MutableList<T>) {
+abstract class BaseListModel<T : BaseModel> protected constructor(val listModel: MutableList<T>) {
     abstract fun clone(): BaseListModel<T>
 
     abstract override fun toString(): String
