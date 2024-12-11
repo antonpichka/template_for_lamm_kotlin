@@ -40,7 +40,7 @@ abstract class BaseListModel<T : BaseModel> protected constructor(val listModel:
     }
 
     fun updateListFromNewListModelParameterListModel(newListModel: List<T>) {
-        for(newItemModel in newListModel) {
+        for(newItemModel: T in newListModel) {
             val indexOfFirst = this.listModel.indexOfFirst { it.uniqueId == newItemModel.uniqueId }
             if(indexOfFirst == -1) {
                 continue
@@ -50,7 +50,7 @@ abstract class BaseListModel<T : BaseModel> protected constructor(val listModel:
     }
 
     fun deleteListFromNewListModelParameterListModel(newListModel: List<T>) {
-        for(newItemModel in newListModel) {
+        for(newItemModel: T in newListModel) {
             val indexOfFirst = this.listModel.indexOfFirst { it.uniqueId == newItemModel.uniqueId }
             if(indexOfFirst == -1) {
                 continue

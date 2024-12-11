@@ -6,8 +6,7 @@ import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify
 
 class ResultWithListModelsWrapper<T : BaseListModelWrapper> private constructor(
     val listModelWrapper: T?,
-    val exceptionController: ExceptionController
-)
+    val exceptionController: ExceptionController)
 {
     companion object {
         fun success(listModelWrapper: BaseListModelWrapper): ResultWithListModelsWrapper<BaseListModelWrapper> {

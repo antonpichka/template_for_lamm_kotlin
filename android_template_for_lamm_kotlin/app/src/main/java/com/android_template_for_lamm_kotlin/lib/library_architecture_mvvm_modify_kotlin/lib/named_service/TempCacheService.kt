@@ -1,5 +1,8 @@
 package com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.named_service
 
+import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.base_exception.EnumGuilty
+import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.base_exception.LocalException
+
 class TempCacheService private constructor() {
     companion object {
         val instance = TempCacheService()
@@ -17,7 +20,7 @@ class TempCacheService private constructor() {
     }
 
     fun dispose(listKeyTempCache: List<String>, iteration: Int) {
-        for(itemKeyTempCache in listKeyTempCache) {
+        for(itemKeyTempCache: String in listKeyTempCache) {
            if(!tempCacheWStreams.containsKey(itemKeyTempCache)) {
                return
            }
@@ -31,7 +34,32 @@ class TempCacheService private constructor() {
             tempCacheWStreams[keyTempCache]?.set(iteration, callback)
             return
         }
-        // HERE HERE HERE
+        if((tempCacheWStreams[keyTempCache] ?: mutableMapOf()).containsKey(iteration)) {
+            throw LocalException(
+                this,
+                EnumGuilty.DEVELOPER,
+                "{ $keyTempCache---$iteration }",
+                "Under such a key and iteration there already exists a listener: { $keyTempCache---$iteration }")
+        }
+        tempCacheWStreams[keyTempCache]?.set(iteration, callback)
+    }
 
+    fun update(keyTempCache: String, value: Any) {
+        tempCache[keyTempCache] = value
+    }
+
+    fun updateWNotify(keyTempCache: String, value: Any) {
+        update(keyTempCache,value)
+        if(!tempCacheWStreams.containsKey(keyTempCache)) {
+            return
+        }
+        for(entry: MutableMap.MutableEntry<Int, (event: Any) -> Unit> in tempCacheWStreams[keyTempCache]?.entries ?: mutableSetOf()) {
+            entry.value(value)
+        }
+    }
+
+    fun delete(keyTempCache: String) {
+        tempCache.remove(keyTempCache)
+        tempCacheWStreams.remove(keyTempCache)
     }
 }
