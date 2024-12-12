@@ -1,61 +1,66 @@
 package com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.base_model
 
-abstract class BaseListModel<T : BaseModel> protected constructor(val listModel: MutableList<T>) {
-    abstract fun clone(): BaseListModel<T>
+abstract class BaseListModel protected constructor(private val listModel: MutableList<BaseModel>) {
+    abstract fun clone(): BaseListModel
 
     abstract override fun toString(): String
 
-    fun sortingFromModelTTNamedTTNamedTTNamedTTIteratorParameterListModel(modelTTNamedTTNamedTTNamedTTIterator: BaseModelTTNamedTTNamedTTNamedTTIterator<T>) {
-        val sortedListModelFromListModelParameterListModelIterator = modelTTNamedTTNamedTTNamedTTIterator.getSortedListModelFromListModelParameterListModelIterator(this.listModel)
-        this.listModel
+    @Suppress("UNCHECKED_CAST")
+    fun<T : BaseModel> listModel(): MutableList<T> {
+        return listModel as MutableList<T>
+    }
+
+    fun sortingFromModelTTNamedTTNamedTTNamedTTIteratorParameterListModel(modelTTNamedTTNamedTTNamedTTIterator: BaseModelTTNamedTTNamedTTNamedTTIterator) {
+        val sortedListModelFromListModelParameterListModelIterator = modelTTNamedTTNamedTTNamedTTIterator.getSortedListModelFromListModelParameterListModelIterator(listModel)
+        listModel
             .takeIf { it.isNotEmpty() }
             ?.clear()
         sortedListModelFromListModelParameterListModelIterator
             .takeIf { it.isNotEmpty() }
-            .let { this.listModel.addAll(sortedListModelFromListModelParameterListModelIterator) }
+            .let { listModel.addAll(sortedListModelFromListModelParameterListModelIterator) }
     }
 
-    fun insertFromNewModelParameterListModel(newModel: T) {
-        this.listModel.add(newModel)
+    fun insertFromNewModelParameterListModel(newModel: BaseModel) {
+        listModel.add(newModel)
     }
 
-    fun updateFromNewModelParameterListModel(newModel: T) {
-        val indexOfFirst = this.listModel.indexOfFirst { it.uniqueId == newModel.uniqueId }
+    fun updateFromNewModelParameterListModel(newModel: BaseModel) {
+        val indexOfFirst = listModel.indexOfFirst { it.uniqueId == newModel.uniqueId }
         if(indexOfFirst == -1) {
             return
         }
-        this.listModel[indexOfFirst] = newModel
+        listModel[indexOfFirst] = newModel
     }
 
     fun deleteFromUniqueIdByModelParameterListModel(uniqueIdByModel: String) {
-        val indexOfFirst = this.listModel.indexOfFirst { it.uniqueId == uniqueIdByModel }
+        val indexOfFirst = listModel.indexOfFirst { it.uniqueId == uniqueIdByModel }
         if(indexOfFirst == -1) {
             return
         }
-        this.listModel.removeAt(indexOfFirst)
+        listModel.removeAt(indexOfFirst)
     }
 
-    fun insertListFromNewListModelParameterListModel(newListModel: List<T>) {
-        this.listModel.addAll(newListModel)
+    fun insertListFromNewListModelParameterListModel(newListModel: List<BaseModel>) {
+        listModel.addAll(newListModel)
     }
 
-    fun updateListFromNewListModelParameterListModel(newListModel: List<T>) {
-        for(newItemModel: T in newListModel) {
-            val indexOfFirst = this.listModel.indexOfFirst { it.uniqueId == newItemModel.uniqueId }
+    fun updateListFromNewListModelParameterListModel(newListModel: List<BaseModel>) {
+        for(newItemModel: BaseModel in newListModel) {
+            val indexOfFirst = listModel.indexOfFirst { it.uniqueId == newItemModel.uniqueId }
             if(indexOfFirst == -1) {
                 continue
             }
-            this.listModel[indexOfFirst] = newItemModel
+            listModel[indexOfFirst] = newItemModel
         }
     }
 
-    fun deleteListFromNewListModelParameterListModel(newListModel: List<T>) {
-        for(newItemModel: T in newListModel) {
-            val indexOfFirst = this.listModel.indexOfFirst { it.uniqueId == newItemModel.uniqueId }
+    fun deleteListFromNewListModelParameterListModel(newListModel: List<BaseModel>) {
+        for(newItemModel: BaseModel in newListModel) {
+            val indexOfFirst = listModel.indexOfFirst { it.uniqueId == newItemModel.uniqueId }
             if(indexOfFirst == -1) {
                 continue
             }
-            this.listModel.removeAt(indexOfFirst)
+            listModel.removeAt(indexOfFirst)
         }
     }
 }

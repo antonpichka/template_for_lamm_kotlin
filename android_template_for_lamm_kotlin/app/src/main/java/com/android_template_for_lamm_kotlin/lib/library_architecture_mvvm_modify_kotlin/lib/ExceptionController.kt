@@ -16,17 +16,17 @@ class ExceptionController private constructor(
     }
 
     override fun toString(): String {
-        if(this.exception == null) {
+        if(exception == null) {
             return "ExceptionController(exception: null)"
         }
-        return "ExceptionController(exception: " + this.exception + ")"
+        return "ExceptionController(exception: $exception)"
     }
 
     fun getKeyParameterException(): String {
-        return this.exception?.key ?: ""
+        return exception?.key ?: ""
     }
 
     fun isWhereNotEqualsNullParameterException(): Boolean {
-        return this.exception != null
+        return exception != null
     }
 }

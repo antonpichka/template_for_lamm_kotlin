@@ -8,7 +8,7 @@ class IterationService private constructor() {
     private var iteration: Int = -1
 
     fun newValueParameterIteration(): Int {
-        this.iteration++
-        return this.iteration
+        iteration++
+        return iteration
     }
 }

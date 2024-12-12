@@ -92,9 +92,9 @@ class NetworkException(
     }
 
     override fun toString(): String {
-        return "NetworkException(key: ${this.key}, " +
-                "statusCode: ${this.statusCode}, " +
-                "nameStatusCode (optional): ${this.nameStatusCode}, " +
-                "descriptionStatusCode (optional): ${this.descriptionStatusCode})";
+        return "NetworkException(key: $key, " +
+                "statusCode: $statusCode, " +
+                "nameStatusCode (optional): $nameStatusCode, " +
+                "descriptionStatusCode (optional): $descriptionStatusCode)";
     }
 }

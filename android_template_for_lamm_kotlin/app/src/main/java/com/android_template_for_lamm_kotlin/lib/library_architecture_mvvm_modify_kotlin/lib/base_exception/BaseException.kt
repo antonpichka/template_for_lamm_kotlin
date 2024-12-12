@@ -14,8 +14,8 @@ abstract class BaseException protected constructor(
     /// Call this method in the descendant constructor as the last line
     protected fun debugPrintExceptionParametersThisClassAndExceptionClass() {
         debugPrintException("\n===start_to_trace_exception===\n")
-        debugPrintException("WhereHappenedException(Class) --> ${this.thisClass}\n" +
-                "NameException(Class) --> ${this.exceptionClass}\n" +
+        debugPrintException("WhereHappenedException(Class) --> $thisClass\n" +
+                "NameException(Class) --> $exceptionClass\n" +
                 "toString() --> ${toString()}")
         debugPrintException("\n===end_to_trace_exception===\n")
     }

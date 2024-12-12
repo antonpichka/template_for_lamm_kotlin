@@ -2,6 +2,6 @@ package com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modif
 
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.base_model.BaseModel
 
-class CurrentModelWIndex<T : BaseModel>(
-    val currentModel: T,
+class CurrentModelWIndex(
+    val currentModel: BaseModel,
     val index: Int)

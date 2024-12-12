@@ -11,8 +11,8 @@ class LocalException(
     }
 
     override fun toString(): String {
-        return "LocalException(enumGuilty: ${this.enumGuilty.name}, " +
-                "key: ${this.key}, " +
-                "exceptionMessage (optional): ${this.exceptionMessage})"
+        return "LocalException(enumGuilty: ${enumGuilty.name}, " +
+                "key: ${key}, " +
+                "exceptionMessage (optional): ${exceptionMessage})"
     }
 }

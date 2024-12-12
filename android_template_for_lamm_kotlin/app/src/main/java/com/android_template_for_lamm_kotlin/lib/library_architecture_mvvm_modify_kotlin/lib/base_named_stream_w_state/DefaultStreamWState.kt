@@ -11,19 +11,19 @@ class DefaultStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(
     private var callback: ((event: Y) -> Unit)? = null
 
     override fun getDataForNamed(): Y {
-        return this.dataForNamed
+        return dataForNamed
     }
 
     override fun dispose() {
-        if(this.isDispose) {
+        if(isDispose) {
             return
         }
-        this.isDispose = true
-        this.callback = null
+        isDispose = true
+        callback = null
     }
 
     override fun listenStreamDataForNamedFromCallback(callback: (event: Y) -> Unit) {
-        if(this.isDispose) {
+        if(isDispose) {
             throw LocalException(
                 this,
                 EnumGuilty.DEVELOPER,
@@ -41,20 +41,20 @@ class DefaultStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(
     }
 
     override fun notifyStreamDataForNamed() {
-        if(this.isDispose) {
+        if(isDispose) {
             throw LocalException(
                 this,
                 EnumGuilty.DEVELOPER,
                 "DefaultStreamWStateQQNotifyStreamDataWNamed",
                 "Already disposed of");
         }
-        if (this.callback == null) {
+        if (callback == null) {
             throw LocalException(
                 this,
                 EnumGuilty.DEVELOPER,
                 "DefaultStreamWStateQQNotifyStreamDataWNamed",
                 "Stream has no listener");
         }
-        this.callback?.let { it(this.dataForNamed) }
+        callback?.let { it(dataForNamed) }
     }
 }
