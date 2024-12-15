@@ -1,45 +1,27 @@
 package com.android_template_for_lamm_kotlin.lib
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.isSystemInDarkTheme
+import com.android_template_for_lamm_kotlin.lib.named_utility.EnumRoutesUtility
 import com.android_template_for_lamm_kotlin.lib.named_vm.app_vm.AppVM
+import com.android_template_for_lamm_kotlin.lib.named_vm.app_vm.DataForAppVM
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppVM {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("World")
-                }
-            }
+            AppVM(
+                dataForAppVM = DataForAppVM(
+                    isLoading = true,
+                    enumRoutesUtility = EnumRoutesUtility.MAIN_VM,
+                    jobWFirstRequest = null,
+                    isDarkTheme = isSystemInDarkTheme(),
+                    sdkIntByVersionByBuild = Build.VERSION.SDK_INT,
+                    sByVersionCodesByBuild = Build.VERSION_CODES.S)
+            )
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AppVM {
-        Greeting("Android")
     }
 }
