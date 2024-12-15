@@ -35,7 +35,7 @@ class DefaultStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(
                 this,
                 EnumGuilty.DEVELOPER,
                 "DefaultStreamWStateQQListenStreamDataWNamedWCallback",
-                "Duplicate");
+                "Duplicate")
         }
         this.callback = callback
     }
@@ -46,14 +46,14 @@ class DefaultStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(
                 this,
                 EnumGuilty.DEVELOPER,
                 "DefaultStreamWStateQQNotifyStreamDataWNamed",
-                "Already disposed of");
+                "Already disposed of")
         }
         if (callback == null) {
             throw LocalException(
                 this,
                 EnumGuilty.DEVELOPER,
                 "DefaultStreamWStateQQNotifyStreamDataWNamed",
-                "Stream has no listener");
+                "Stream has no listener")
         }
         callback?.let { it(dataForNamed) }
     }
