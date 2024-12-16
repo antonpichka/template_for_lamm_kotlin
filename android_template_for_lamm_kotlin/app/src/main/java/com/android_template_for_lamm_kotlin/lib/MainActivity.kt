@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppVM(
-                dataForAppVM = DataForAppVM(
+                dataWAppVM = DataForAppVM(
                     isLoading = true,
                     enumRoutesUtility = EnumRoutesUtility.MAIN_VM,
                     jobWFirstRequest = null,

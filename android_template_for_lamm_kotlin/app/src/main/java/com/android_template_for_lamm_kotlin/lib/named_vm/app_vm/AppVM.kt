@@ -76,8 +76,8 @@ class AppViewModel(dataForAppVM: DataForAppVM) : ViewModel() {
 
 @SuppressLint("NewApi")
 @Composable
-fun AppVM(dataForAppVM: DataForAppVM) {
-    val viewModel = AppViewModel(dataForAppVM)
+fun AppVM(dataWAppVM: DataForAppVM) {
+    val viewModel = AppViewModel(dataWAppVM)
     viewModel
         .namedStreamWState
         .ListenStreamDataForNamed()

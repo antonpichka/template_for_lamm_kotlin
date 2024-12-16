@@ -30,7 +30,7 @@ class MutableStateFlowStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(
         throw LocalException(
             this,
             EnumGuilty.DEVELOPER,
-            "MutableStateFlowStreamWStateQQListenStreamDataForNamedFromCallback",
+            "MutableStateFlowStreamWStateQQListenStreamDataWNamedWCallback",
             "Do not use this method to register a listener. Use 'ListenStreamDataForNamed'")
     }
 
