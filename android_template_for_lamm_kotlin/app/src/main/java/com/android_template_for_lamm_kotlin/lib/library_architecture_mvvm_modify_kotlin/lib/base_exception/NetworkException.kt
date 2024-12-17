@@ -95,6 +95,6 @@ class NetworkException(
         return "NetworkException(key: $key, " +
                 "statusCode: $statusCode, " +
                 "nameStatusCode (optional): $nameStatusCode, " +
-                "descriptionStatusCode (optional): $descriptionStatusCode)";
+                "descriptionStatusCode (optional): $descriptionStatusCode)"
     }
 }
