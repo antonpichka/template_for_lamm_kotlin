@@ -1,21 +1,23 @@
 package com.android_template_for_lamm_kotlin.lib.named_stream_w_state
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.base_data_for_named.BaseDataForNamed
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.base_exception.EnumGuilty
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.base_exception.LocalException
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.base_named_stream_w_state.BaseNamedStreamWState
+import com.android_template_for_lamm_kotlin.lib.named_utility.WrapperDataWNamedWNamedStreamWStateUtility
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
-class MutableStateFlowStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(
-    private val dataForNamed: Y) : BaseNamedStreamWState<T, Y>()
-{
+class MutableStateFlowStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(dataForNamed: Y) : BaseNamedStreamWState<T, Y>() {
+    private val wrapperDataWNamedWNamedStreamWStateUtility: WrapperDataWNamedWNamedStreamWStateUtility<T,Y> = WrapperDataWNamedWNamedStreamWStateUtility(dataForNamed,0)
+    private val mutableStateFlow: MutableStateFlow<WrapperDataWNamedWNamedStreamWStateUtility<T,Y>> = MutableStateFlow(
+        WrapperDataWNamedWNamedStreamWStateUtility(dataForNamed,0)
+    )
+    val stateFlow: StateFlow<WrapperDataWNamedWNamedStreamWStateUtility<T,Y>> = mutableStateFlow
     private var isDispose: Boolean = false
-    private var mutableStateFlow: MutableStateFlow<Y>? = null
 
     override fun getDataForNamed(): Y {
-        return dataForNamed
+        return wrapperDataWNamedWNamedStreamWStateUtility.dataForNamed
     }
 
     override fun dispose() {
@@ -23,7 +25,6 @@ class MutableStateFlowStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(
             return
         }
         isDispose = true
-        mutableStateFlow = null
     }
 
     override fun listenStreamDataForNamedFromCallback(callback: (event: Y) -> Unit) {
@@ -31,7 +32,7 @@ class MutableStateFlowStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(
             this,
             EnumGuilty.DEVELOPER,
             "MutableStateFlowStreamWStateQQListenStreamDataWNamedWCallback",
-            "Do not use this method to register a listener. Use 'ListenStreamDataForNamed'")
+            "Do not use this method to register a listener. Use 'stateFlow'")
     }
 
     override fun notifyStreamDataForNamed() {
@@ -42,33 +43,10 @@ class MutableStateFlowStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(
                 "MutableStateFlowStreamWStateQQNotifyStreamDataWNamed",
                 "Already disposed of")
         }
-        if (mutableStateFlow == null) {
-            throw LocalException(
-                this,
-                EnumGuilty.DEVELOPER,
-                "MutableStateFlowStreamWStateQQNotifyStreamDataWNamed",
-                "Stream has no listener")
-        }
-        mutableStateFlow?.value = dataForNamed
-    }
-
-    @Composable
-    fun ListenStreamDataForNamed() {
-        if(isDispose) {
-            throw LocalException(
-                this,
-                EnumGuilty.DEVELOPER,
-                "MutableStateFlowStreamWStateQQListenStreamDataWNamed",
-                "Already disposed of")
-        }
-        if(this.mutableStateFlow != null) {
-            throw LocalException(
-                this,
-                EnumGuilty.DEVELOPER,
-                "MutableStateFlowStreamWStateQQListenStreamDataWNamed",
-                "Duplicate")
-        }
-        mutableStateFlow = MutableStateFlow(dataForNamed)
-        mutableStateFlow?.collectAsState()
+        wrapperDataWNamedWNamedStreamWStateUtility.incrementParameterIteration()
+        mutableStateFlow.value = WrapperDataWNamedWNamedStreamWStateUtility(
+            wrapperDataWNamedWNamedStreamWStateUtility.dataForNamed,
+            wrapperDataWNamedWNamedStreamWStateUtility.getParameterIteration()
+        )
     }
 }

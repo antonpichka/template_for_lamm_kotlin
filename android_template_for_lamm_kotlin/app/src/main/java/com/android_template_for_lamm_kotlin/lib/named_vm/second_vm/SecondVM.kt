@@ -1,6 +1,7 @@
-package com.android_template_for_lamm_kotlin.lib.named_vm.example_vm
+package com.android_template_for_lamm_kotlin.lib.named_vm.second_vm
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -14,10 +15,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.TempCacheProvider
 import com.android_template_for_lamm_kotlin.lib.named_stream_w_state.MutableStateFlowStreamWState
+import com.android_template_for_lamm_kotlin.lib.named_utility.EnumRoutesUtility
+import com.android_template_for_lamm_kotlin.lib.named_utility.KeysTempCacheProviderUtility
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ExampleViewModel(dataWNamed: DataForExampleVM) : ViewModel() {
+class SecondViewModel(dataWNamed: DataForSecondVM) : ViewModel() {
     // NamedStreamWState
     val namedStreamWState = MutableStateFlowStreamWState(dataWNamed)
 
@@ -45,11 +48,15 @@ class ExampleViewModel(dataWNamed: DataForExampleVM) : ViewModel() {
             namedStreamWState.notifyStreamDataForNamed()
         }
     }
+
+    fun onClickYYGoBack() {
+        tempCacheProvider.updateWNotify(KeysTempCacheProviderUtility.ENUM_ROUTES_UTILITY, EnumRoutesUtility.MAIN_VM)
+    }
 }
 
 @Composable
-fun ExampleVM(dataWNamed: DataForExampleVM) {
-    val viewModel = ExampleViewModel(dataWNamed)
+fun SecondVM(dataWNamed: DataForSecondVM) {
+    val viewModel = SecondViewModel(dataWNamed)
     val collectAsState by viewModel
         .namedStreamWState
         .stateFlow
@@ -59,14 +66,14 @@ fun ExampleVM(dataWNamed: DataForExampleVM) {
     }
     val dataWNamedFirst = collectAsState.dataForNamed
     when (dataWNamedFirst.getEnumDataForNamed()) {
-        EnumDataForExampleVM.IS_LOADING -> {
+        EnumDataForSecondVM.IS_LOADING -> {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = Color.Black
             ) {
             }
         }
-        EnumDataForExampleVM.EXCEPTION -> {
+        EnumDataForSecondVM.EXCEPTION -> {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
@@ -76,13 +83,20 @@ fun ExampleVM(dataWNamed: DataForExampleVM) {
                 )
             }
         }
-        EnumDataForExampleVM.SUCCESS -> {
+        EnumDataForSecondVM.SUCCESS -> {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
+                Button(
+                    onClick = {
+                        viewModel.onClickYYGoBack()
+                    }
+                ) {
+                    Text(text = "Go Back")
+                }
                 Text(
-                    text = "Success"
+                    text = "SecondVM"
                 )
             }
         }

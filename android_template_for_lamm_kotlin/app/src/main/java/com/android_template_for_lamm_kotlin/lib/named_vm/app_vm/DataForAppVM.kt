@@ -11,6 +11,8 @@ class DataForAppVM(isLoading: Boolean,
                    private val sdkIntByVersionByBuild: Int,
                    private val sByVersionCodesByBuild: Int) : BaseDataForNamed<EnumDataForAppVM>(isLoading)
 {
+    val startDestination: String = enumRoutesUtility.name
+
     override fun getEnumDataForNamed(): EnumDataForAppVM {
         if(isLoading) {
             return EnumDataForAppVM.IS_LOADING

@@ -9,24 +9,25 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.TempCacheProvider
+import com.android_template_for_lamm_kotlin.lib.named_composable.NavHostComposable
 import com.android_template_for_lamm_kotlin.lib.named_stream_w_state.MutableStateFlowStreamWState
 import com.android_template_for_lamm_kotlin.lib.named_utility.AndroidThemeUtility
 import com.android_template_for_lamm_kotlin.lib.named_utility.EnumRoutesUtility
 import com.android_template_for_lamm_kotlin.lib.named_utility.KeysTempCacheProviderUtility
-import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class AppViewModel(dataForAppVM: DataForAppVM) : ViewModel() {
+class AppViewModel(dataWNamed: DataForAppVM) : ViewModel() {
     // NamedStreamWState
-    val namedStreamWState = MutableStateFlowStreamWState(dataForAppVM)
+    val namedStreamWState = MutableStateFlowStreamWState(dataWNamed)
 
     // TempCacheProvider
     private val tempCacheProvider = TempCacheProvider()
@@ -47,7 +48,6 @@ class AppViewModel(dataForAppVM: DataForAppVM) : ViewModel() {
             ?.cancel()
     }
 
-
     fun firstRequest() {
         namedStreamWState.getDataForNamed().jobWFirstRequest = viewModelScope.launch {
             delay(1000)
@@ -65,10 +65,9 @@ class AppViewModel(dataForAppVM: DataForAppVM) : ViewModel() {
     }
 
     private fun callbackYYImplementListenerEnumRoutesUtilityWTempCacheProvider(event: Any) {
-        val enumRoutesUtility = event as EnumRoutesUtility
         namedStreamWState
             .getDataForNamed()
-            .enumRoutesUtility = enumRoutesUtility
+            .enumRoutesUtility = event as EnumRoutesUtility
         namedStreamWState
             .notifyStreamDataForNamed()
     }
@@ -76,29 +75,23 @@ class AppViewModel(dataForAppVM: DataForAppVM) : ViewModel() {
 
 @SuppressLint("NewApi")
 @Composable
-fun AppVM(dataWAppVM: DataForAppVM) {
-    val viewModel = AppViewModel(dataWAppVM)
-    viewModel
+fun AppVM(dataWNamed: DataForAppVM) {
+    val viewModel = AppViewModel(dataWNamed)
+    val collectAsState by viewModel
         .namedStreamWState
-        .ListenStreamDataForNamed()
+        .stateFlow
+        .collectAsState()
     LaunchedEffect(Unit) {
         viewModel.firstRequest()
     }
-    val dataWNamed = viewModel
-        .namedStreamWState
-        .getDataForNamed()
-    when (dataWNamed.getEnumDataForNamed()) {
+    val dataWNamedFirst = collectAsState.dataForNamed
+    when (dataWNamedFirst.getEnumDataForNamed()) {
         EnumDataForAppVM.IS_LOADING -> {
-            MaterialTheme(
-                typography = AndroidThemeUtility.typography,
-                content = {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = Color.Black
-                    ) {
-                    }
-                }
-            )
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = Color.Black
+            ) {
+            }
         }
         EnumDataForAppVM.EXCEPTION -> {
             MaterialTheme(
@@ -109,95 +102,75 @@ fun AppVM(dataWAppVM: DataForAppVM) {
                         color = MaterialTheme.colorScheme.background
                     ) {
                         Text(
-                            text = "Exception: ${dataWNamed.exceptionController.getKeyParameterException()}"
+                            text = "Exception: ${dataWNamedFirst.exceptionController.getKeyParameterException()}"
                         )
                     }
                 }
             )
         }
         EnumDataForAppVM.IS_DYNAMIC_DARK_COLOR_SCHEME -> {
-            MaterialTheme(
+            NavHostComposable(
+                startDestination = dataWNamedFirst.startDestination,
+                enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
+            )
+           /* MaterialTheme(
                 colorScheme = dynamicDarkColorScheme(LocalContext.current),
                 typography = AndroidThemeUtility.typography,
                 content = {
-                    val navController = rememberNavController()
-                    LaunchedEffect(dataWNamed.enumRoutesUtility) {
-                        navController.navigate(dataWNamed.enumRoutesUtility) {
-                            popUpTo(EnumRoutesUtility.MAIN_VM.name) { inclusive = true }
-                        }
-                    }
-                    NavHost(
-                        navController = navController,
-                        startDestination = EnumRoutesUtility.MAIN_VM.name
+                    NavHostComposable(
+                        startDestination = dataWNamedFirst.startDestination,
+                        enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
                     )
-                    {
-                        composable(EnumRoutesUtility.MAIN_VM.name) { MainVM() }
-                    }
                 }
-            )
+            )*/
         }
         EnumDataForAppVM.IS_DYNAMIC_LIGHT_COLOR_SCHEME -> {
-            MaterialTheme(
+            NavHostComposable(
+                startDestination = dataWNamedFirst.startDestination,
+                enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
+            )
+            /*MaterialTheme(
                 colorScheme = dynamicLightColorScheme(LocalContext.current),
                 typography = AndroidThemeUtility.typography,
                 content = {
-                    val navController = rememberNavController()
-                    LaunchedEffect(dataWNamed.enumRoutesUtility) {
-                        navController.navigate(dataWNamed.enumRoutesUtility) {
-                            popUpTo(EnumRoutesUtility.MAIN_VM.name) { inclusive = true }
-                        }
-                    }
-                    NavHost(
-                        navController = navController,
-                        startDestination = EnumRoutesUtility.MAIN_VM.name
+                    NavHostComposable(
+                        startDestination = dataWNamedFirst.startDestination,
+                        enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
                     )
-                    {
-                        composable(EnumRoutesUtility.MAIN_VM.name) { MainVM() }
-                    }
                 }
-            )
+            )*/
         }
         EnumDataForAppVM.IS_DARK_THEME -> {
-            MaterialTheme(
+            NavHostComposable(
+                startDestination = dataWNamedFirst.startDestination,
+                enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
+            )
+            /*MaterialTheme(
                 colorScheme = AndroidThemeUtility.darkColorScheme,
                 typography = AndroidThemeUtility.typography,
                 content = {
-                    val navController = rememberNavController()
-                    LaunchedEffect(dataWNamed.enumRoutesUtility) {
-                        navController.navigate(dataWNamed.enumRoutesUtility) {
-                            popUpTo(EnumRoutesUtility.MAIN_VM.name) { inclusive = true }
-                        }
-                    }
-                    NavHost(
-                        navController = navController,
-                        startDestination = EnumRoutesUtility.MAIN_VM.name
+                    NavHostComposable(
+                        startDestination = dataWNamedFirst.startDestination,
+                        enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
                     )
-                    {
-                        composable(EnumRoutesUtility.MAIN_VM.name) { MainVM() }
-                    }
                 }
-            )
+            )*/
         }
         EnumDataForAppVM.IS_LIGHT_THEME -> {
-            MaterialTheme(
+            NavHostComposable(
+                startDestination = dataWNamedFirst.startDestination,
+                enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
+            )
+            /*MaterialTheme(
                 colorScheme = AndroidThemeUtility.lightColorScheme,
                 typography = AndroidThemeUtility.typography,
                 content = {
-                    val navController = rememberNavController()
-                    LaunchedEffect(dataWNamed.enumRoutesUtility) {
-                        navController.navigate(dataWNamed.enumRoutesUtility) {
-                            popUpTo(EnumRoutesUtility.MAIN_VM.name) { inclusive = true }
-                        }
-                    }
-                    NavHost(
-                        navController = navController,
-                        startDestination = EnumRoutesUtility.MAIN_VM.name
+                    NavHostComposable(
+                        startDestination = dataWNamedFirst.startDestination,
+                        enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
                     )
-                    {
-                        composable(EnumRoutesUtility.MAIN_VM.name) { MainVM() }
-                    }
                 }
-            )
+            )*/
         }
     }
 }
