@@ -7,9 +7,7 @@ import kotlinx.coroutines.Job
 class DataForAppVM(isLoading: Boolean,
                    var enumRoutesUtility: EnumRoutesUtility,
                    var jobWFirstRequest: Job?,
-                   private val isDarkTheme: Boolean,
-                   private val sdkIntByVersionByBuild: Int,
-                   private val sByVersionCodesByBuild: Int) : BaseDataForNamed<EnumDataForAppVM>(isLoading)
+                   private val isDarkTheme: Boolean) : BaseDataForNamed<EnumDataForAppVM>(isLoading)
 {
     val startDestination: String = enumRoutesUtility.name
 
@@ -17,19 +15,16 @@ class DataForAppVM(isLoading: Boolean,
         if(isLoading) {
             return EnumDataForAppVM.IS_LOADING
         }
-        if(exceptionController.isWhereNotEqualsNullParameterException()) {
-            return EnumDataForAppVM.EXCEPTION
+        if(exceptionController.isWhereNotEqualsNullParameterException() && isDarkTheme) {
+            return EnumDataForAppVM.EXCEPTION_W_IS_DARK_THEME
         }
-        if(sdkIntByVersionByBuild >= sByVersionCodesByBuild && isDarkTheme) {
-            return EnumDataForAppVM.IS_DYNAMIC_DARK_COLOR_SCHEME
-        }
-        if(sdkIntByVersionByBuild >= sByVersionCodesByBuild && !this.isDarkTheme) {
-            return EnumDataForAppVM.IS_DYNAMIC_LIGHT_COLOR_SCHEME
+        if(exceptionController.isWhereNotEqualsNullParameterException() && !isDarkTheme) {
+            return EnumDataForAppVM.EXCEPTION_W_IS_LIGHT_THEME
         }
         if(isDarkTheme) {
-            return EnumDataForAppVM.IS_DARK_THEME
+            return EnumDataForAppVM.SUCCESS_W_IS_DARK_THEME
         }
-        return EnumDataForAppVM.IS_LIGHT_THEME
+        return EnumDataForAppVM.SUCCESS_W_IS_LIGHT_THEME
     }
 
     override fun toString(): String {
@@ -38,7 +33,6 @@ class DataForAppVM(isLoading: Boolean,
                 "enumRoutesUtility: ${enumRoutesUtility.name}, " +
                 "jobWFirstRequest: ${jobWFirstRequest.toString()}, " +
                 "isDarkTheme: $isDarkTheme, " +
-                "sdkIntByVersionByBuild: $sdkIntByVersionByBuild, " +
-                "sByVersionCodesByBuild: $sByVersionCodesByBuild)"
+                "startDestination: $startDestination)"
     }
 }

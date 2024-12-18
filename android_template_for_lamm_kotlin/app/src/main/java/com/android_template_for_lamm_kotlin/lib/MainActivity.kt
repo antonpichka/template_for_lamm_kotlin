@@ -1,6 +1,5 @@
 package com.android_template_for_lamm_kotlin.lib
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,9 +17,7 @@ class MainActivity : ComponentActivity() {
                     isLoading = true,
                     enumRoutesUtility = EnumRoutesUtility.MAIN_VM,
                     jobWFirstRequest = null,
-                    isDarkTheme = isSystemInDarkTheme(),
-                    sdkIntByVersionByBuild = Build.VERSION.SDK_INT,
-                    sByVersionCodesByBuild = Build.VERSION_CODES.S)
+                    isDarkTheme = isSystemInDarkTheme())
             )
         }
     }

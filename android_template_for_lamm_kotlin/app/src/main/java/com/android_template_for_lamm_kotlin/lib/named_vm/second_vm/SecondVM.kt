@@ -69,7 +69,7 @@ fun SecondVM(dataWNamed: DataForSecondVM) {
         EnumDataForSecondVM.IS_LOADING -> {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = Color.Black
+                color = Color.Red
             ) {
             }
         }
@@ -90,7 +90,6 @@ fun SecondVM(dataWNamed: DataForSecondVM) {
             ) {
                 Button(
                     onClick = {
-                        viewModel.onClickYYGoBack()
                     }
                 ) {
                     Text(text = "Go Back")

@@ -69,7 +69,7 @@ fun MainVM(dataWNamed: DataForMainVM) {
         EnumDataForMainVM.IS_LOADING -> {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = Color.Black
+                color = Color.Green
             ) {
             }
         }
@@ -90,7 +90,6 @@ fun MainVM(dataWNamed: DataForMainVM) {
             ) {
                 Button(
                     onClick = {
-                        viewModel.onClickYYGoForward()
                     }
                 ) {
                     Text(text = "Go Forward")

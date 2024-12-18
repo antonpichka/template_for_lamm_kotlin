@@ -5,19 +5,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.TempCacheProvider
-import com.android_template_for_lamm_kotlin.lib.named_composable.NavHostComposable
 import com.android_template_for_lamm_kotlin.lib.named_stream_w_state.MutableStateFlowStreamWState
 import com.android_template_for_lamm_kotlin.lib.named_utility.AndroidThemeUtility
 import com.android_template_for_lamm_kotlin.lib.named_utility.EnumRoutesUtility
@@ -93,84 +89,49 @@ fun AppVM(dataWNamed: DataForAppVM) {
             ) {
             }
         }
-        EnumDataForAppVM.EXCEPTION -> {
+        EnumDataForAppVM.EXCEPTION_W_IS_DARK_THEME -> {
             MaterialTheme(
-                typography = AndroidThemeUtility.typography,
-                content = {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        Text(
-                            text = "Exception: ${dataWNamedFirst.exceptionController.getKeyParameterException()}"
-                        )
-                    }
-                }
-            )
-        }
-        EnumDataForAppVM.IS_DYNAMIC_DARK_COLOR_SCHEME -> {
-            NavHostComposable(
-                startDestination = dataWNamedFirst.startDestination,
-                enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
-            )
-           /* MaterialTheme(
-                colorScheme = dynamicDarkColorScheme(LocalContext.current),
-                typography = AndroidThemeUtility.typography,
-                content = {
-                    NavHostComposable(
-                        startDestination = dataWNamedFirst.startDestination,
-                        enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
-                    )
-                }
-            )*/
-        }
-        EnumDataForAppVM.IS_DYNAMIC_LIGHT_COLOR_SCHEME -> {
-            NavHostComposable(
-                startDestination = dataWNamedFirst.startDestination,
-                enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
-            )
-            /*MaterialTheme(
-                colorScheme = dynamicLightColorScheme(LocalContext.current),
-                typography = AndroidThemeUtility.typography,
-                content = {
-                    NavHostComposable(
-                        startDestination = dataWNamedFirst.startDestination,
-                        enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
-                    )
-                }
-            )*/
-        }
-        EnumDataForAppVM.IS_DARK_THEME -> {
-            NavHostComposable(
-                startDestination = dataWNamedFirst.startDestination,
-                enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
-            )
-            /*MaterialTheme(
                 colorScheme = AndroidThemeUtility.darkColorScheme,
-                typography = AndroidThemeUtility.typography,
-                content = {
-                    NavHostComposable(
-                        startDestination = dataWNamedFirst.startDestination,
-                        enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
+                typography = AndroidThemeUtility.typography)
+            {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Text(
+                        text = "Exception: ${dataWNamedFirst.exceptionController.getKeyParameterException()}"
                     )
                 }
-            )*/
+            }
         }
-        EnumDataForAppVM.IS_LIGHT_THEME -> {
-            NavHostComposable(
-                startDestination = dataWNamedFirst.startDestination,
-                enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
-            )
-            /*MaterialTheme(
+        EnumDataForAppVM.EXCEPTION_W_IS_LIGHT_THEME -> {
+            MaterialTheme(
                 colorScheme = AndroidThemeUtility.lightColorScheme,
-                typography = AndroidThemeUtility.typography,
-                content = {
-                    NavHostComposable(
-                        startDestination = dataWNamedFirst.startDestination,
-                        enumRoutesUtility = dataWNamedFirst.enumRoutesUtility
+                typography = AndroidThemeUtility.typography)
+            {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Text(
+                        text = "Exception: ${dataWNamedFirst.exceptionController.getKeyParameterException()}"
                     )
                 }
-            )*/
+            }
+        }
+        EnumDataForAppVM.SUCCESS_W_IS_DARK_THEME -> {
+            MaterialTheme(
+                colorScheme = AndroidThemeUtility.darkColorScheme,
+                typography = AndroidThemeUtility.typography)
+            {
+            }
+        }
+        EnumDataForAppVM.SUCCESS_W_IS_LIGHT_THEME -> {
+            MaterialTheme(
+                colorScheme = AndroidThemeUtility.lightColorScheme,
+                typography = AndroidThemeUtility.typography)
+            {
+            }
         }
     }
 }
