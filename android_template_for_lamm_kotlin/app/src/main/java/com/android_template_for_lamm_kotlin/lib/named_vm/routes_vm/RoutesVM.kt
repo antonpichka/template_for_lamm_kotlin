@@ -1,20 +1,22 @@
 package com.android_template_for_lamm_kotlin.lib.named_vm.routes_vm
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.TempCacheProvider
 import com.android_template_for_lamm_kotlin.lib.named_stream_w_state.MutableStateFlowStreamWState
-import kotlinx.coroutines.delay
+import com.android_template_for_lamm_kotlin.lib.named_utility.EnumRoutesUtility
+import com.android_template_for_lamm_kotlin.lib.named_utility.KeysTempCacheProviderUtility
+import com.android_template_for_lamm_kotlin.lib.named_vm.main_vm.DataForMainVM
+import com.android_template_for_lamm_kotlin.lib.named_vm.main_vm.MainVM
+import com.android_template_for_lamm_kotlin.lib.named_vm.main_vm.MainViewModel
+import com.android_template_for_lamm_kotlin.lib.named_vm.second_vm.DataForSecondVM
+import com.android_template_for_lamm_kotlin.lib.named_vm.second_vm.SecondVM
+import com.android_template_for_lamm_kotlin.lib.named_vm.second_vm.SecondViewModel
 import kotlinx.coroutines.launch
 
 class RoutesViewModel(dataWNamed: DataForRoutesVM) : ViewModel() {
@@ -28,66 +30,76 @@ class RoutesViewModel(dataWNamed: DataForRoutesVM) : ViewModel() {
 
     // NamedUtility
 
+    init {
+        listensNamedTempCacheProvider()
+    }
+
     override fun onCleared() {
         super.onCleared()
+        tempCacheProvider.dispose(listOf())
         namedStreamWState
             .getDataForNamed()
             .jobWFirstRequest
             ?.cancel()
+        namedStreamWState.dispose()
     }
 
     fun firstRequest() {
         namedStreamWState.getDataForNamed().jobWFirstRequest = viewModelScope.launch {
-            delay(1000)
-            namedStreamWState
-                .getDataForNamed()
-                .isLoading = false
-            namedStreamWState.notifyStreamDataForNamed()
         }
+    }
+
+    private fun listensNamedTempCacheProvider() {
+        tempCacheProvider.listenNamed(KeysTempCacheProviderUtility.ENUM_ROUTES_UTILITY) { event: Any ->
+            callbackYYImplementListenerEnumRoutesUtilityWTempCacheProvider(event)
+        }
+    }
+
+    private fun callbackYYImplementListenerEnumRoutesUtilityWTempCacheProvider(event: Any) {
+        namedStreamWState
+            .getDataForNamed()
+            .enumRoutesUtility = event as EnumRoutesUtility
+        namedStreamWState
+            .notifyStreamDataForNamed()
     }
 }
 
 @Composable
-fun RoutesVM(dataWNamed: DataForRoutesVM) {
-    val viewModel = RoutesViewModel(dataWNamed)
+fun RoutesVM(viewModel: RoutesViewModel) {
     val collectAsState by viewModel
         .namedStreamWState
         .stateFlow
         .collectAsState()
+    // Coroutines for using animations and built-in composable functions
+    // val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         viewModel.firstRequest()
     }
-    val dataWNamedFirst = collectAsState.dataForNamed
-    when (dataWNamedFirst.getEnumDataForNamed()) {
-        EnumDataForRoutesVM.IS_LOADING -> {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = Color.Black
-            ) {
-            }
+    DisposableEffect(Unit) {
+        onDispose {
         }
-        EnumDataForRoutesVM.EXCEPTION -> {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                Text(
-                    text = "Exception: ${dataWNamedFirst.exceptionController.getKeyParameterException()}"
-                )
-            }
-        }
+    }
+    val dataWNamed = collectAsState.dataForNamed
+    when (dataWNamed.getEnumDataForNamed()) {
         EnumDataForRoutesVM.MAIN_VM -> {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                Text(
-                    text = "Success"
-                )
-            }
+            MainVM(
+                viewModel = MainViewModel(
+                    dataWNamed = DataForMainVM(
+                        isLoading = true,
+                        jobWFirstRequest = null,
+                    )
+                ),
+            )
         }
         EnumDataForRoutesVM.SECOND_VM -> {
-
+            SecondVM(
+                viewModel = SecondViewModel(
+                    dataWNamed = DataForSecondVM(
+                        isLoading = true,
+                        jobWFirstRequest = null
+                    )
+                ),
+            )
         }
     }
 }

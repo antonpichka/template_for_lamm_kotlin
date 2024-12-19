@@ -1,16 +1,20 @@
 package com.android_template_for_lamm_kotlin.lib.named_vm.second_vm
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_template_for_lamm_kotlin.lib.library_architecture_mvvm_modify_kotlin.lib.TempCacheProvider
@@ -33,10 +37,12 @@ class SecondViewModel(dataWNamed: DataForSecondVM) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
+        tempCacheProvider.dispose(listOf())
         namedStreamWState
             .getDataForNamed()
             .jobWFirstRequest
             ?.cancel()
+        namedStreamWState.dispose()
     }
 
     fun firstRequest() {
@@ -54,49 +60,111 @@ class SecondViewModel(dataWNamed: DataForSecondVM) : ViewModel() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SecondVM(dataWNamed: DataForSecondVM) {
-    val viewModel = SecondViewModel(dataWNamed)
+fun SecondVM(viewModel: SecondViewModel) {
     val collectAsState by viewModel
         .namedStreamWState
         .stateFlow
         .collectAsState()
+    // Coroutines for using animations and built-in composable functions
+    // val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         viewModel.firstRequest()
     }
-    val dataWNamedFirst = collectAsState.dataForNamed
-    when (dataWNamedFirst.getEnumDataForNamed()) {
+    DisposableEffect(Unit) {
+        onDispose {
+        }
+    }
+    val dataWNamed = collectAsState.dataForNamed
+    when (dataWNamed.getEnumDataForNamed()) {
         EnumDataForSecondVM.IS_LOADING -> {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = Color.Red
-            ) {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text(text = "SecondVM")
+                        }
+                    )
+                },
+                floatingActionButtonPosition = FabPosition.End,
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = {
+                        }
+                    ) {
+                        Text(text = "X")
+                    }
+                },
+            ) { paddingValues ->
+                Column(
+                    modifier = Modifier.padding(paddingValues)
+                ) {
+                    Text(text = "Loading")
+                }
             }
         }
         EnumDataForSecondVM.EXCEPTION -> {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                Text(
-                    text = "Exception: ${dataWNamedFirst.exceptionController.getKeyParameterException()}"
-                )
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text(text = "SecondVM")
+                        }
+                    )
+                },
+                floatingActionButtonPosition = FabPosition.End,
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = {
+                        }
+                    ) {
+                        Text(text = "X")
+                    }
+                },
+            ) { paddingValues ->
+                Column(
+                    modifier = Modifier.padding(paddingValues)
+                ) {
+                    Text(
+                        text = "Exception: ${dataWNamed.exceptionController.getKeyParameterException()}"
+                    )
+                }
             }
         }
         EnumDataForSecondVM.SUCCESS -> {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                Button(
-                    onClick = {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text(text = "SecondVM")
+                        }
+                    )
+                },
+                floatingActionButtonPosition = FabPosition.End,
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = {
+                        }
+                    ) {
+                        Text(text = "X")
                     }
+                },
+            ) { paddingValues ->
+                Column(
+                    modifier = Modifier.padding(paddingValues)
                 ) {
-                    Text(text = "Go Back")
+                    Button(
+                        onClick = {
+                            viewModel.onClickYYGoBack()
+                        }
+                    ) {
+                        Text(text = "Go Back")
+                    }
+                    Text(
+                        text = "SecondVM"
+                    )
                 }
-                Text(
-                    text = "SecondVM"
-                )
             }
         }
     }

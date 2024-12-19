@@ -10,9 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class MutableStateFlowStreamWState<T : Enum<T>, Y : BaseDataForNamed<T>>(dataForNamed: Y) : BaseNamedStreamWState<T, Y>() {
     private val wrapperDataWNamedWNamedStreamWStateUtility: WrapperDataWNamedWNamedStreamWStateUtility<T,Y> = WrapperDataWNamedWNamedStreamWStateUtility(dataForNamed,0)
-    private val mutableStateFlow: MutableStateFlow<WrapperDataWNamedWNamedStreamWStateUtility<T,Y>> = MutableStateFlow(
-        WrapperDataWNamedWNamedStreamWStateUtility(dataForNamed,0)
-    )
+    private val mutableStateFlow: MutableStateFlow<WrapperDataWNamedWNamedStreamWStateUtility<T,Y>> = MutableStateFlow(WrapperDataWNamedWNamedStreamWStateUtility(dataForNamed,0))
     val stateFlow: StateFlow<WrapperDataWNamedWNamedStreamWStateUtility<T,Y>> = mutableStateFlow
     private var isDispose: Boolean = false
 

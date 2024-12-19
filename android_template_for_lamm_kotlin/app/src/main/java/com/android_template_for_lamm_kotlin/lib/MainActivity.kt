@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import com.android_template_for_lamm_kotlin.lib.named_utility.EnumRoutesUtility
 import com.android_template_for_lamm_kotlin.lib.named_vm.app_vm.AppVM
+import com.android_template_for_lamm_kotlin.lib.named_vm.app_vm.AppViewModel
 import com.android_template_for_lamm_kotlin.lib.named_vm.app_vm.DataForAppVM
 
 class MainActivity : ComponentActivity() {
@@ -13,11 +13,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppVM(
-                dataWNamed = DataForAppVM(
-                    isLoading = true,
-                    enumRoutesUtility = EnumRoutesUtility.MAIN_VM,
-                    jobWFirstRequest = null,
-                    isDarkTheme = isSystemInDarkTheme())
+                viewModel = AppViewModel(
+                    dataWNamed = DataForAppVM(
+                        isLoading = true,
+                        jobWFirstRequest = null,
+                        isDarkTheme = isSystemInDarkTheme()
+                    )
+                ),
             )
         }
     }

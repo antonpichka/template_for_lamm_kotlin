@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,6 +19,9 @@ import com.android_template_for_lamm_kotlin.lib.named_stream_w_state.MutableStat
 import com.android_template_for_lamm_kotlin.lib.named_utility.AndroidThemeUtility
 import com.android_template_for_lamm_kotlin.lib.named_utility.EnumRoutesUtility
 import com.android_template_for_lamm_kotlin.lib.named_utility.KeysTempCacheProviderUtility
+import com.android_template_for_lamm_kotlin.lib.named_vm.routes_vm.DataForRoutesVM
+import com.android_template_for_lamm_kotlin.lib.named_vm.routes_vm.RoutesVM
+import com.android_template_for_lamm_kotlin.lib.named_vm.routes_vm.RoutesViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -32,16 +36,14 @@ class AppViewModel(dataWNamed: DataForAppVM) : ViewModel() {
 
     // NamedUtility
 
-    init {
-        listensNamedTempCacheProvider()
-    }
-
     override fun onCleared() {
         super.onCleared()
+        tempCacheProvider.dispose(listOf(KeysTempCacheProviderUtility.ENUM_ROUTES_UTILITY))
         namedStreamWState
             .getDataForNamed()
             .jobWFirstRequest
             ?.cancel()
+        namedStreamWState.dispose()
     }
 
     fun firstRequest() {
@@ -53,35 +55,26 @@ class AppViewModel(dataWNamed: DataForAppVM) : ViewModel() {
             namedStreamWState.notifyStreamDataForNamed()
         }
     }
-
-    private fun listensNamedTempCacheProvider() {
-        tempCacheProvider.listenNamed(KeysTempCacheProviderUtility.ENUM_ROUTES_UTILITY) { event: Any ->
-            callbackYYImplementListenerEnumRoutesUtilityWTempCacheProvider(event)
-        }
-    }
-
-    private fun callbackYYImplementListenerEnumRoutesUtilityWTempCacheProvider(event: Any) {
-        namedStreamWState
-            .getDataForNamed()
-            .enumRoutesUtility = event as EnumRoutesUtility
-        namedStreamWState
-            .notifyStreamDataForNamed()
-    }
 }
 
 @SuppressLint("NewApi")
 @Composable
-fun AppVM(dataWNamed: DataForAppVM) {
-    val viewModel = AppViewModel(dataWNamed)
+fun AppVM(viewModel: AppViewModel) {
     val collectAsState by viewModel
         .namedStreamWState
         .stateFlow
         .collectAsState()
+    // Coroutines for using animations and built-in composable functions
+    // val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         viewModel.firstRequest()
     }
-    val dataWNamedFirst = collectAsState.dataForNamed
-    when (dataWNamedFirst.getEnumDataForNamed()) {
+    DisposableEffect(Unit) {
+        onDispose {
+        }
+    }
+    val dataWNamed = collectAsState.dataForNamed
+    when (dataWNamed.getEnumDataForNamed()) {
         EnumDataForAppVM.IS_LOADING -> {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -99,7 +92,7 @@ fun AppVM(dataWNamed: DataForAppVM) {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Text(
-                        text = "Exception: ${dataWNamedFirst.exceptionController.getKeyParameterException()}"
+                        text = "Exception: ${dataWNamed.exceptionController.getKeyParameterException()}"
                     )
                 }
             }
@@ -114,7 +107,7 @@ fun AppVM(dataWNamed: DataForAppVM) {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Text(
-                        text = "Exception: ${dataWNamedFirst.exceptionController.getKeyParameterException()}"
+                        text = "Exception: ${dataWNamed.exceptionController.getKeyParameterException()}"
                     )
                 }
             }
@@ -124,6 +117,15 @@ fun AppVM(dataWNamed: DataForAppVM) {
                 colorScheme = AndroidThemeUtility.darkColorScheme,
                 typography = AndroidThemeUtility.typography)
             {
+                RoutesVM(
+                    viewModel = RoutesViewModel(
+                        dataWNamed = DataForRoutesVM(
+                            isLoading = false,
+                            jobWFirstRequest = null,
+                            enumRoutesUtility = EnumRoutesUtility.MAIN_VM
+                        )
+                    )
+                )
             }
         }
         EnumDataForAppVM.SUCCESS_W_IS_LIGHT_THEME -> {
@@ -131,6 +133,15 @@ fun AppVM(dataWNamed: DataForAppVM) {
                 colorScheme = AndroidThemeUtility.lightColorScheme,
                 typography = AndroidThemeUtility.typography)
             {
+                RoutesVM(
+                    viewModel = RoutesViewModel(
+                        dataWNamed = DataForRoutesVM(
+                            isLoading = false,
+                            jobWFirstRequest = null,
+                            enumRoutesUtility = EnumRoutesUtility.MAIN_VM
+                        )
+                    )
+                )
             }
         }
     }
