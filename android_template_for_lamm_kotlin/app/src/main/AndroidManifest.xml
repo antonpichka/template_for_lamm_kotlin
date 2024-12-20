@@ -10,7 +10,7 @@
         android:theme="@style/Theme.App"
         tools:targetApi="31">
         <activity
-            android:name=".lib.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.App">
             <intent-filter>
