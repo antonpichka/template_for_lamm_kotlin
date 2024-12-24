@@ -5,11 +5,11 @@ import com.android_template_for_lamm_kotlin.library_architecture_mvvm_modify_kot
 import com.android_template_for_lamm_kotlin.model.example.example_wrapper.ExampleWrapper
 import com.android_template_for_lamm_kotlin.model.example.example_wrapper.ListExampleWrapper
 
-open class ExampleWrapperRepository<T : ExampleWrapper, Y : ListExampleWrapper> : BaseModelWrapperRepository() {
+open class ExampleWrapperRepository : BaseModelWrapperRepository() {
     override fun dispose() {
     }
 
-    suspend fun getExampleParameterUnknown(): ResultWithModelWrapper<T> {
+    suspend fun getExampleParameterUnknown(): ResultWithModelWrapper {
         throw Exception()
     }
 }
