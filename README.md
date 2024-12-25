@@ -19,4 +19,4 @@
 - - - 'applicationId = "com.android_template_for_lamm_kotlin"' to 'applicationId = "com.android_${your_name}"'
 - - 'android_template_for_lamm_kotlin/app/src/main/res/values/strings.xml':
 - - - '<string name="app_name">AndroidTemplateForLAMMKotlin</string>' to '<string name="app_name">${your_name}</string>'
-- - 'android_template_for_lamm_kotlin/app/src/main/java/com/android_template_for_lamm_kotlin' to 'android_template_for_lamm_kotlin/app/src/main/java/com/android_${your_name}'
+- - 'android_template_for_lamm_kotlin/app/src/main/kotlin/com/android_template_for_lamm_kotlin' to 'android_template_for_lamm_kotlin/app/src/main/kotlin/com/android_${your_name}'
