@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.android)
     implementation(libs.io.ktor.ktor.client.core)
     implementation(libs.io.ktor.ktor.client.cio)
+    implementation(libs.io.github.antonpichka.lamm)
 
     // Implementation Platform
     implementation(platform(libs.androidx.compose.compose.bom))

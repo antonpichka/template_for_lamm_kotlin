@@ -14,9 +14,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android_template_for_lamm_kotlin.library_architecture_mvvm_modify_kotlin.TempCacheProvider
 import com.android_template_for_lamm_kotlin.named_composable.PlatformComposable
 import com.android_template_for_lamm_kotlin.named_stream_w_state.MutableStateFlowStreamWState
+import io.github.antonpichka.lamm.TempCacheProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

@@ -1,9 +1,8 @@
 package com.android_template_for_lamm_kotlin.model.example
 
-import com.android_template_for_lamm_kotlin.library_architecture_mvvm_modify_kotlin.base_model.BaseListModel
-import com.android_template_for_lamm_kotlin.library_architecture_mvvm_modify_kotlin.base_model.BaseModel
+import io.github.antonpichka.lamm.base_model.BaseListModel
 
-open class ListExample<T : Example>(listModel: MutableList<T>) : BaseListModel(listModel) {
+open class ListExample<T : Example>(listModel: MutableList<T>) : BaseListModel<T>(listModel) {
     @Suppress("UNCHECKED_CAST")
     override fun clone(): ListExample<T> {
         val newListModel = mutableListOf<T>()

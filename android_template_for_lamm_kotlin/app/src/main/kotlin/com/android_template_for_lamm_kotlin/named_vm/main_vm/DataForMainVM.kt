@@ -1,6 +1,6 @@
 package com.android_template_for_lamm_kotlin.named_vm.main_vm
 
-import com.android_template_for_lamm_kotlin.library_architecture_mvvm_modify_kotlin.base_data_for_named.BaseDataForNamed
+import io.github.antonpichka.lamm.base_data_for_named.BaseDataForNamed
 import kotlinx.coroutines.Job
 
 class DataForMainVM(isLoading: Boolean,

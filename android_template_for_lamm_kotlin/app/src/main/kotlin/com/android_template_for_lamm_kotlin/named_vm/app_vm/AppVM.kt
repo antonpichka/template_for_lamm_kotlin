@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android_template_for_lamm_kotlin.library_architecture_mvvm_modify_kotlin.TempCacheProvider
 import com.android_template_for_lamm_kotlin.named_stream_w_state.MutableStateFlowStreamWState
 import com.android_template_for_lamm_kotlin.named_utility.AndroidThemeUtility
 import com.android_template_for_lamm_kotlin.named_utility.EnumRoutesUtility
@@ -22,6 +21,7 @@ import com.android_template_for_lamm_kotlin.named_utility.KeysTempCacheProviderU
 import com.android_template_for_lamm_kotlin.named_vm.routes_vm.DataForRoutesVM
 import com.android_template_for_lamm_kotlin.named_vm.routes_vm.RoutesVM
 import com.android_template_for_lamm_kotlin.named_vm.routes_vm.RoutesViewModel
+import io.github.antonpichka.lamm.TempCacheProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
