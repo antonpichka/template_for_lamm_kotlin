@@ -11,7 +11,8 @@ open class ListExampleWrapper(listsListObject: List<List<Any>>) : BaseListModelW
     override fun<T : BaseModel, Y : BaseListModel<T>> createListModel(): Y {
         val listModel = mutableListOf<Example>()
         for(itemListObject: List<Any> in listsListObject) {
-            listModel.add(Example(itemListObject[0] as String))
+            val exampleWrapper = ExampleWrapper(itemListObject)
+            listModel.add(exampleWrapper.createModel())
         }
         return ListExample(listModel) as Y
     }
