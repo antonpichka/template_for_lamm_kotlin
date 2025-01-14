@@ -17,7 +17,6 @@ import androidx.lifecycle.viewModelScope
 import com.android_template_for_lamm_kotlin.named_stream_w_state.MutableStateFlowStreamWState
 import com.android_template_for_lamm_kotlin.named_utility.AndroidThemeUtility
 import com.android_template_for_lamm_kotlin.named_utility.EnumRoutersUtility
-import com.android_template_for_lamm_kotlin.named_utility.KeysTempCacheProviderUtility
 import com.android_template_for_lamm_kotlin.named_vm.routers_vm.DataForRoutersVM
 import com.android_template_for_lamm_kotlin.named_vm.routers_vm.RoutersVM
 import com.android_template_for_lamm_kotlin.named_vm.routers_vm.RoutersViewModel
@@ -38,7 +37,7 @@ class AppViewModel(dataWNamed: DataForAppVM) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        tempCacheProvider.dispose(listOf(KeysTempCacheProviderUtility.ENUM_ROUTERS_UTILITY))
+        tempCacheProvider.dispose(listOf())
         namedStreamWState
             .getDataForNamed()
             .jobWFirstRequest

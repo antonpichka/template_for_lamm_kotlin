@@ -38,7 +38,7 @@ class RoutersViewModel(dataWNamed: DataForRoutersVM) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        tempCacheProvider.dispose(listOf())
+        tempCacheProvider.dispose(listOf(KeysTempCacheProviderUtility.ENUM_ROUTERS_UTILITY))
         namedStreamWState
             .getDataForNamed()
             .jobWFirstRequest
