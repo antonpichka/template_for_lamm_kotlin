@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_template_for_lamm_kotlin.named_composable.PlatformComposable
 import com.android_template_for_lamm_kotlin.named_stream_w_state.MutableStateFlowStreamWState
-import com.android_template_for_lamm_kotlin.named_utility.EnumRoutesUtility
+import com.android_template_for_lamm_kotlin.named_utility.EnumRoutersUtility
 import com.android_template_for_lamm_kotlin.named_utility.KeysTempCacheProviderUtility
 import io.github.antonpichka.lamm.TempCacheProvider
 import kotlinx.coroutines.delay
@@ -58,8 +58,8 @@ class MainViewModel(dataWNamed: DataForMainVM) : ViewModel() {
 
     fun onClickYYGoForward() {
         tempCacheProvider.updateWNotify(
-            KeysTempCacheProviderUtility.ENUM_ROUTES_UTILITY,
-            EnumRoutesUtility.SECOND_VM)
+            KeysTempCacheProviderUtility.ENUM_ROUTERS_UTILITY,
+            EnumRoutersUtility.SECOND_VM)
     }
 }
 

@@ -16,11 +16,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_template_for_lamm_kotlin.named_stream_w_state.MutableStateFlowStreamWState
 import com.android_template_for_lamm_kotlin.named_utility.AndroidThemeUtility
-import com.android_template_for_lamm_kotlin.named_utility.EnumRoutesUtility
+import com.android_template_for_lamm_kotlin.named_utility.EnumRoutersUtility
 import com.android_template_for_lamm_kotlin.named_utility.KeysTempCacheProviderUtility
-import com.android_template_for_lamm_kotlin.named_vm.routes_vm.DataForRoutesVM
-import com.android_template_for_lamm_kotlin.named_vm.routes_vm.RoutesVM
-import com.android_template_for_lamm_kotlin.named_vm.routes_vm.RoutesViewModel
+import com.android_template_for_lamm_kotlin.named_vm.routers_vm.DataForRoutersVM
+import com.android_template_for_lamm_kotlin.named_vm.routers_vm.RoutersVM
+import com.android_template_for_lamm_kotlin.named_vm.routers_vm.RoutersViewModel
 import io.github.antonpichka.lamm.TempCacheProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ class AppViewModel(dataWNamed: DataForAppVM) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        tempCacheProvider.dispose(listOf(KeysTempCacheProviderUtility.ENUM_ROUTES_UTILITY))
+        tempCacheProvider.dispose(listOf(KeysTempCacheProviderUtility.ENUM_ROUTERS_UTILITY))
         namedStreamWState
             .getDataForNamed()
             .jobWFirstRequest
@@ -117,12 +117,12 @@ fun AppVM(viewModel: AppViewModel) {
                 colorScheme = AndroidThemeUtility.darkColorScheme,
                 typography = AndroidThemeUtility.typography)
             {
-                RoutesVM(
-                    viewModel = RoutesViewModel(
-                        dataWNamed = DataForRoutesVM(
+                RoutersVM(
+                    viewModel = RoutersViewModel(
+                        dataWNamed = DataForRoutersVM(
                             isLoading = false,
                             jobWFirstRequest = null,
-                            enumRoutesUtility = EnumRoutesUtility.MAIN_VM
+                            enumRoutersUtility = EnumRoutersUtility.MAIN_VM
                         )
                     )
                 )
@@ -133,12 +133,12 @@ fun AppVM(viewModel: AppViewModel) {
                 colorScheme = AndroidThemeUtility.lightColorScheme,
                 typography = AndroidThemeUtility.typography)
             {
-                RoutesVM(
-                    viewModel = RoutesViewModel(
-                        dataWNamed = DataForRoutesVM(
+                RoutersVM(
+                    viewModel = RoutersViewModel(
+                        dataWNamed = DataForRoutersVM(
                             isLoading = false,
                             jobWFirstRequest = null,
-                            enumRoutesUtility = EnumRoutesUtility.MAIN_VM
+                            enumRoutersUtility = EnumRoutersUtility.MAIN_VM
                         )
                     )
                 )

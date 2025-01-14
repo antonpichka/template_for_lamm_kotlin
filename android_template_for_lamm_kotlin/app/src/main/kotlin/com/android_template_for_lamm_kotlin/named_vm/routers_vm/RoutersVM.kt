@@ -1,4 +1,4 @@
-package com.android_template_for_lamm_kotlin.named_vm.routes_vm
+package com.android_template_for_lamm_kotlin.named_vm.routers_vm
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android_template_for_lamm_kotlin.named_stream_w_state.MutableStateFlowStreamWState
-import com.android_template_for_lamm_kotlin.named_utility.EnumRoutesUtility
+import com.android_template_for_lamm_kotlin.named_utility.EnumRoutersUtility
 import com.android_template_for_lamm_kotlin.named_utility.KeysTempCacheProviderUtility
 import com.android_template_for_lamm_kotlin.named_vm.main_vm.DataForMainVM
 import com.android_template_for_lamm_kotlin.named_vm.main_vm.MainVM
@@ -19,7 +19,7 @@ import com.android_template_for_lamm_kotlin.named_vm.second_vm.SecondViewModel
 import io.github.antonpichka.lamm.TempCacheProvider
 import kotlinx.coroutines.launch
 
-class RoutesViewModel(dataWNamed: DataForRoutesVM) : ViewModel() {
+class RoutersViewModel(dataWNamed: DataForRoutersVM) : ViewModel() {
     // NamedStreamWState
     val namedStreamWState = MutableStateFlowStreamWState(dataWNamed)
 
@@ -31,7 +31,9 @@ class RoutesViewModel(dataWNamed: DataForRoutesVM) : ViewModel() {
     // NamedUtility
 
     init {
-        listensNamedTempCacheProvider()
+        tempCacheProvider.listenNamed(KeysTempCacheProviderUtility.ENUM_ROUTERS_UTILITY) { event: Any ->
+            callbackYYListenEnumRoutersUtility(event as EnumRoutersUtility)
+        }
     }
 
     override fun onCleared() {
@@ -49,23 +51,17 @@ class RoutesViewModel(dataWNamed: DataForRoutesVM) : ViewModel() {
         }
     }
 
-    private fun listensNamedTempCacheProvider() {
-        tempCacheProvider.listenNamed(KeysTempCacheProviderUtility.ENUM_ROUTES_UTILITY) { event: Any ->
-            callbackYYImplementListenerEnumRoutesUtilityWTempCacheProvider(event)
-        }
-    }
-
-    private fun callbackYYImplementListenerEnumRoutesUtilityWTempCacheProvider(event: Any) {
+    private fun callbackYYListenEnumRoutersUtility(event: EnumRoutersUtility) {
         namedStreamWState
             .getDataForNamed()
-            .enumRoutesUtility = event as EnumRoutesUtility
+            .enumRoutersUtility = event
         namedStreamWState
             .notifyStreamDataForNamed()
     }
 }
 
 @Composable
-fun RoutesVM(viewModel: RoutesViewModel) {
+fun RoutersVM(viewModel: RoutersViewModel) {
     val collectAsState by viewModel
         .namedStreamWState
         .stateFlow
@@ -81,7 +77,7 @@ fun RoutesVM(viewModel: RoutesViewModel) {
     }
     val dataWNamed = collectAsState.dataForNamed
     when (dataWNamed.getEnumDataForNamed()) {
-        EnumDataForRoutesVM.MAIN_VM -> {
+        EnumDataForRoutersVM.MAIN_VM -> {
             MainVM(
                 viewModel = MainViewModel(
                     dataWNamed = DataForMainVM(
@@ -91,7 +87,7 @@ fun RoutesVM(viewModel: RoutesViewModel) {
                 ),
             )
         }
-        EnumDataForRoutesVM.SECOND_VM -> {
+        EnumDataForRoutersVM.SECOND_VM -> {
             SecondVM(
                 viewModel = SecondViewModel(
                     dataWNamed = DataForSecondVM(
